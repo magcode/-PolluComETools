@@ -1,0 +1,6 @@
+mqtt/node_modules/*
+mqtt/package-lock.json
+mqtt/pollucom
+victoria/node_modules/*
+victoria/package-lock.json
+mqtt/pollucom
