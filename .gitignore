@@ -3,4 +3,5 @@ mqtt/package-lock.json
 mqtt/pollucom
 victoria/node_modules/*
 victoria/package-lock.json
-mqtt/pollucom
+victoria/config/default.json
+victoria/pollucom

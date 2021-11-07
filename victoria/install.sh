@@ -1,5 +1,5 @@
 cd PolluComETools/victoria
-gcc pollucom.c -o pollucom
+gcc ../pollucom.c -o pollucom
 
 npm install
 
