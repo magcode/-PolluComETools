@@ -34,6 +34,7 @@ Before you start it the first time configure `victoria/config/default.json`
   ]
 }
 ```
+The `mappings` section allows you to map the input value to a metric name of your choice.
 
 # Starting
 ```
