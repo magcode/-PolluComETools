@@ -1,16 +1,16 @@
 {
   "victoriametrics": {
-    "host": "vserv.marko.lan",
+    "host": "my.victoria.host",
 	"port": "8428"
   },
   "usbport": "/dev/ttyUSB1",
   "schedule": 15,
-  "exec": "~/mqtt-tools/pollumq/pollucom",
+  "exec": "~/PolluComETools/victoria/pollucom",
   "mappings" : [
-	{"energy":"heizungEnergy"},
-	{"power":"heizungPower"},
-	{"tempIn":"heizungTempIn"},
-	{"tempOut":"heizungTempOut"},
-	{"flow":"heizungFlow"}
+	{"energy":"heatingEnergy"},
+	{"power":"heatingPower"},
+	{"tempIn":"heatingTempIn"},
+	{"tempOut":"heatingTempOut"},
+	{"flow":"heatingFlow"}
   ]
 }

@@ -5,7 +5,7 @@
     "license": "MIT",
     "keywords": [
         "pollucom",
-        "mqtt"
+        "victoriametrics"
     ],
     "repository": {
         "type": "git",
