@@ -15,7 +15,11 @@
         "mqtt": "latest",
         "config": "latest",
         "node-cron": "latest",
-        "@jsier/retrier": "latest"
+        "@jsier/retrier": "latest",
+        "winston": "^3.3.3",
+        "winston-daily-rotate-file": "^4.5.5",
+        "winston-logrotate": "^1.3.0",
+        "winston-loki": "^6.0.3"
     },
     "main": "polluvic.js"
 }

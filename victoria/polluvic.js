@@ -3,6 +3,7 @@ const { exec } = require("child_process");
 var http = require('http');
 const cron = require('node-cron');
 const config = require('config');
+const LoggerFactory = require("./Logger.js");
 
 const vicHost = config.get('victoriametrics.host');
 const vicPort = config.get('victoriametrics.port');
@@ -10,18 +11,20 @@ const vicPort = config.get('victoriametrics.port');
 const binary = config.get('exec');
 const usbport = config.get('usbport');
 
+const loggingConfig = config.get('logging');
+const logFac = new LoggerFactory(loggingConfig, "pollucom");
+const logger = logFac.getLogger();
 // this maps value names to metrics name in VictoriaMetrics
 const mappings = config.get('mappings');
 
 const everyXMinutes = config.get('schedule');
 const retryAfter = 10000;
-const retryLimit = 4;
+const retryLimit = 5;
 
-console.log("PolluComE VictoriaMetrics interface");
-console.log("Using victoria server: " + vicHost +  ":" + vicPort);
-console.log("Using binary: " + binary);
-console.log("Sending data every: " + everyXMinutes + " minute");
-console.log();
+logger.info("PolluComE VictoriaMetrics interface");
+logger.info("Using victoria server: " + vicHost +  ":" + vicPort);
+logger.info("Using binary: " + binary);
+logger.info("Sending data every: " + everyXMinutes + " minute");
 
 const options = { limit: retryLimit, delay: retryAfter };
 const retrier = new Retrier(options);
@@ -30,19 +33,20 @@ var timer = "*/" + everyXMinutes + ' * * * *';
 cron.schedule(timer, function () {
     retrier.resolve(attempt => new Promise(
         function (resolve, reject) {
+			logger.info("Getting data ...");
 			exec(binary + " -d " + usbport, (error, stdout, stderr) => {
                 if (error) {
-                    console.log(`error: ${error.message}`);
+                    logger.error(`error: ${error.message}`);
                     reject("Error")
                 }
                 if (stderr) {
-                    console.log(`stderr: ${stderr}`);
+                    logger.error(`stderr: ${stderr}`);
                     reject("Error")
                 }
                 var lines = stdout.toString().split('\n');
 
                 if (lines.includes("No data received!")) {     
-                    console.log("No data received!")
+                    logger.warn("No data received!")
                     reject("No data")
                 }
                 
@@ -53,6 +57,7 @@ cron.schedule(timer, function () {
                         data[string[0]] = string[1];
                     }
                 });
+				logger.info("Done.");
 				resolve(data)
             });
         })
@@ -63,7 +68,7 @@ cron.schedule(timer, function () {
 					mappings.forEach(function(element){
 						if (element.hasOwnProperty(key)) {
 							const data = "home " + element[key] + "=" + result[key]
-							//console.log("Data: '" + data + "'")
+							logger.debug("Data: '" + data + "'")
 							const httpOptions = {
 								hostname: vicHost,
 								port: vicPort,
@@ -78,19 +83,19 @@ cron.schedule(timer, function () {
 							
 							const req = http.request(httpOptions, (res) => {
 									if (res.statusCode!=204) {
-										console.log(`ERROR, got statusCode from victoria: ${res.statusCode}`)	
+										logger.error(`ERROR, got statusCode from victoria: ${res.statusCode}`)	
 									}
 									
 								})
 							req.write(data)
 							req.end()
 							req.on('error', (error) => {
-									console.error("ERROR: " + error)
+								logger.error("ERROR: " + error)
 								})
 						}				
 					});
                 });
 		},
-        error => console.log(error)
+        error => logger.error(error)
     );
 });
