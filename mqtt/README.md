@@ -14,7 +14,7 @@ PolluComETools/mqtt/install.sh
 ```
 
 # Configuration
-Before you start it the first time configure `mqtt/config/default.json`
+Before you start it the first time configure `mqtt/default.json`
 
 ```
 {
@@ -24,7 +24,7 @@ Before you start it the first time configure `mqtt/config/default.json`
   },
   "usbport": "/dev/ttyUSB1",                // USB port of the IR sensor
   "schedule": 15,                           // data will be send each 15 minutes
-  "exec": "~/mqtt-tools/pollumq/pollucom",  // you can leave this
+  "exec": "~/PolluComETools/mqtt/pollucom"  // you can leave this
 }
 ```
 

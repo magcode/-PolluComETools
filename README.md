@@ -5,6 +5,6 @@ It provide an MQTT interface for easy integration into your home automation.
 
 The other option is to persist information to a [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics) database.
 
-[MQTT Client](mqtt/README.md)
+[MQTT Client](mqtt)
 
-[VictoriaMetrics Client](victoria/README.md)
+[VictoriaMetrics Client](victoria)

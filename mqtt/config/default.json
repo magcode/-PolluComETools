@@ -5,5 +5,5 @@
   },
   "usbport": "/dev/ttyUSB1",
   "schedule": 15,
-  "exec": "~/mqtt-tools/pollumq/pollucom"
+  "exec": "~/PolluComETools/mqtt/pollucom"
 }
