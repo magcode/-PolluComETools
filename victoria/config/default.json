@@ -12,5 +12,20 @@
 	{"tempIn":"heatingTempIn"},
 	{"tempOut":"heatingTempOut"},
 	{"flow":"heatingFlow"}
-  ]
+  ],
+  "logging": {
+    "console": {
+      "enabled": false,
+      "level": "debug"
+    },
+    "file": {
+      "enabled": false,
+      "level": "debug"
+    },
+    "loki": {
+      "enabled": true,
+      "level": "info",
+      "url": "http://myloki.host:3100"
+    }
+  }
 }
